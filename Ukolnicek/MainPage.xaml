@@ -1,0 +1,65 @@
+﻿<Page
+    x:Class="Ukolnicek.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Ukolnicek"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodel="using:Ukolnicek.ViewModels"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.DataContext>
+        <viewmodel:MainViewModel />
+    </Page.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="1">
+            <TextBlock HorizontalAlignment="Left" Text="Assignment Name" TextWrapping="Wrap" Margin="5"/>
+            <TextBox HorizontalAlignment="Stretch" Margin="5" Text="{Binding SelectedHomework.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" />
+
+
+            <TextBlock  HorizontalAlignment="Left" Text="Due Date" TextWrapping="Wrap" Margin="5"/>
+            <CalendarDatePicker HorizontalAlignment="Stretch" Date="{Binding SelectedHomework.Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock HorizontalAlignment="Left" Text="Subject" TextWrapping="Wrap" Margin="5" VerticalAlignment="Center"/>
+            <ComboBox HorizontalAlignment="Stretch" Margin="5" Grid.Row="1" SelectedItem="{Binding SelectedHomework.Subject, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Subjects}"/>
+            
+            <TextBlock HorizontalAlignment="Left" Text="Description" TextWrapping="Wrap" Margin="5"/>
+            <TextBox HorizontalAlignment="Stretch" Margin="5" Grid.Row="1" VerticalAlignment="Stretch" Text="{Binding SelectedHomework.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" />
+            <CheckBox IsChecked="{Binding Path=SelectedHomework.IsDone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" VerticalAlignment="Center">Done</CheckBox>
+        </StackPanel>
+        <ListBox Grid.Row="0" ItemsSource="{Binding Homeworks}" SelectedIndex="{Binding SelectedHomeworkIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedHomework, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.RowSpan="11">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" MaxWidth="30"/>
+                            <ColumnDefinition Width="*" MinWidth="700"/>
+                        </Grid.ColumnDefinitions>
+                        <CheckBox IsChecked="{Binding Path=IsDone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" VerticalAlignment="Center" Grid.Column="0"/>
+                        <TextBox HorizontalAlignment="Stretch" Grid.Column="1" Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" FontSize="14"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <CommandBar DefaultLabelPosition="Right" ClosedDisplayMode="Compact"  Grid.Row="10" VerticalAlignment="Bottom">
+            <AppBarButton Icon="Add" Label="Add" Command="{Binding Add}"/>
+            <AppBarButton Icon="Delete" Label="Remove" Command="{Binding Remove}"/>
+            <AppBarButton Icon="OpenFile" Label="Open File" Click="AppBarButton_Click" />
+            <AppBarButton Icon="Save" Label="Save File" Click="AppBarButton_Click_1" />
+            <CommandBar.Content>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5">
+                    <TextBlock VerticalAlignment="Center" Margin="3" Text="{Binding SelectedHomeworkIndex}" />
+                    <TextBlock VerticalAlignment="Center" Margin="3" Text="/" />
+                    <TextBlock VerticalAlignment="Center" Margin="3" Text="{Binding Homeworks.Count}" />
+                </StackPanel>
+            </CommandBar.Content>
+        </CommandBar>
+    </Grid>
+</Page>
+
