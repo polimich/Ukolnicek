@@ -28,8 +28,8 @@ namespace Ukolnicek.ViewModels
 
         public MainViewModel()
         {
-            Homeworks.Add(new Homework { Name = "černá svině", Date = new DateTime(2020, 3, 27) , Subject = Subject.PRG, IsDone = false });
-            Homeworks.Add(new Homework { Name = "bílá svině", Date = new DateTime(2020,3,28), Subject = Subject.CJL, IsDone = false });
+            Homeworks.Add(new Homework { Name = "Ukol1", Date = new DateTime(2020, 3, 27) , Subject = Subject.PRG, IsDone = false });
+            Homeworks.Add(new Homework { Name = "Ukol2", Date = new DateTime(2020,3,28), Subject = Subject.CJL, IsDone = false });
 
             Add = new RelayCommand(
                 () => { Homeworks.Add(new Homework { Name = "Nový úkol" }); },
